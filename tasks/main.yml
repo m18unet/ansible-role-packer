@@ -1,0 +1,17 @@
+---
+- name: Check the presence of the packer binary.
+  stat:
+    path: "{{ packer_bin_path }}"
+  register: packer_check
+
+- name: Check the packer version.
+  shell: "{{ packer_bin_path }} --version"
+  failed_when: false
+  changed_when: false
+  register: packer_current_version
+
+- name: Install packer v{{ packer_version }}
+  include_tasks: install.yml
+  when: >-
+    not packer_check.stat.exists
+    or packer_version not in packer_current_version.stdout

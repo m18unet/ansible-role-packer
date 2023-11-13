@@ -1,0 +1,19 @@
+---
+- name: Verify
+  hosts: all
+  become: false
+  gather_facts: false
+
+  vars_files:
+    - ../../defaults/main.yml
+
+  tasks:
+    - name: Check the packer version.
+      command: "{{ packer_bin_path }} --version"
+      changed_when: false
+      register: packer_verify_version
+
+    - name: Verify packer's version is {{ packer_version }}
+      assert:
+        that:
+          - packer_version in packer_verify_version.stdout

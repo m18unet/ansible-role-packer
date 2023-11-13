@@ -1,0 +1,23 @@
+---
+- name: Download the packer zip archive.
+  get_url:
+    url: "{{ packer_download_url }}"
+    dest: /tmp
+    checksum: sha256:{{ packer_checksum_url }}
+    mode: 0755
+  register: packer_download
+
+- name: Unarchive the packer archive.
+  unarchive:
+    src: "{{ packer_download.dest }}"
+    dest: /tmp
+    mode: 0755
+    remote_src: true
+
+- name: Copy the packer binary into place.
+  copy:
+    src: /tmp/packer
+    dest: "{{ packer_bin_path }}"
+    mode: 0755
+    remote_src: true
+  become: true

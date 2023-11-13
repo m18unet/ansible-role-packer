@@ -1,0 +1,10 @@
+---
+# See available releases: https://github.com/hashicorp/packer/releases
+packer_version: '1.9.4'
+packer_platform: linux
+packer_arch: amd64
+packer_bin_path: /usr/local/bin/packer
+packer_release_url: https://releases.hashicorp.com/packer/{{ packer_version }}
+packer_archive_name: packer_{{ packer_version }}_{{ packer_platform }}_{{ packer_arch }}.zip
+packer_download_url: "{{ packer_release_url }}/{{ packer_archive_name }}"
+packer_checksum_url: "{{ packer_release_url }}/packer_{{ packer_version }}_SHA256SUMS"
